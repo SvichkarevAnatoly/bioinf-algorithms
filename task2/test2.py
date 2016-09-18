@@ -11,7 +11,7 @@ class Test(unittest.TestCase):
         self.assertEqual("ACT", align[v])
         self.assertEqual("ATT", align[w])
 
-    def test_from_lecture(self):
+    def test_from_rosalind(self):
         v = "PLEASANTLY"
         w = "MEANLY"
         align, score = ga.alignment(v, w)
