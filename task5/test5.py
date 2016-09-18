@@ -8,6 +8,6 @@ class Test(unittest.TestCase):
         v, w = "PRTEINS", "PRTWPSEIN"
         align, score = agpa.alignment(v, w)
 
-        self.assertEqual(8, score)
+        self.assertEqual(6, score)
         self.assertEqual("PRT---EINS", align[v])
         self.assertEqual("PRTWPSEIN-", align[w])
