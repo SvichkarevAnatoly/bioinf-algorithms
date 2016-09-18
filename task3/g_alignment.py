@@ -2,7 +2,12 @@
 
 # parameters for algorithm
 d = 1
-m = 1
+m = {
+    'A': {'A': 5, 'R': -2, 'N': -1, 'K': -1},
+    'R': {'A': -2, 'R': 7, 'N': -1, 'K': 3},
+    'N': {'A': -1, 'R': -1, 'N': 7, 'K': 0},
+    'K': {'A': -1, 'R': 3, 'N': 0, 'K': 6},
+}
 
 
 def lcs_backtrack(v, w):
@@ -21,14 +26,14 @@ def lcs_backtrack(v, w):
             s[i][j] = max(
                 s[i - 1][j] - d,
                 s[i][j - 1] - d,
-                s[i - 1][j - 1] + (1 if v[i - 1] == w[j - 1] else -m)
+                s[i - 1][j - 1] + m[v[i - 1]][w[j - 1]]
             )
 
             if s[i][j] == s[i - 1][j] - d:
                 backtrack[i - 1][j - 1] = '↓'
             elif s[i][j] == s[i][j - 1] - d:
                 backtrack[i - 1][j - 1] = '→'
-            elif s[i][j] == s[i - 1][j - 1] + (1 if v[i - 1] == w[j - 1] else -m):
+            elif s[i][j] == s[i - 1][j - 1] + m[v[i - 1]][w[j - 1]]:
                 backtrack[i - 1][j - 1] = '↘'
     return backtrack, s[v_len][w_len]
 

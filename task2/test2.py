@@ -3,13 +3,21 @@ import g_alignment as ga
 
 
 class Test(unittest.TestCase):
-    def test_from_lecture(self):
-        v = "AKRANR"
-        w = "KAAANK"
+    def test_simple(self):
+        v = "ACT"
+        w = "ATT"
         align, score = ga.alignment(v, w)
-        self.assertEqual(18, score)
-        self.assertEqual("AKRA--NR", align[v])
-        self.assertEqual("-K-AAANK", align[w])
+        self.assertEqual(1, score)
+        self.assertEqual("ACT", align[v])
+        self.assertEqual("ATT", align[w])
+
+    def test_from_lecture(self):
+        v = "PLEASANTLY"
+        w = "MEANLY"
+        align, score = ga.alignment(v, w)
+        self.assertEqual(0, score)
+        self.assertEqual("PLEASANTLY", align[v])
+        self.assertEqual("M-EA--N-LY", align[w])
 
 
 if __name__ == '__main__':
