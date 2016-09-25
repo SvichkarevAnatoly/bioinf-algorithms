@@ -19,6 +19,14 @@ class Test(unittest.TestCase):
         self.assertEqual("PLEASANTLY", align[v])
         self.assertEqual("M-EA--N-LY", align[w])
 
+    def test_from_same_length(self):
+        v = "PLEASANTLY"
+        w = "LPLEAAANTL"
+        align, score = ga.alignment(v, w)
+        self.assertEqual(5, score)
+        self.assertEqual("-PLEASANTLY", align[v])
+        self.assertEqual("LPLEAAANTL-", align[w])
+
 
 if __name__ == '__main__':
     unittest.main()
