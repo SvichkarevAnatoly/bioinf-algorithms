@@ -26,11 +26,18 @@ def lcs_backtrack(v, w):
                 backtrack[i - 1][j - 1] = '→'
             elif s[i][j] == s[i - 1][j - 1] + (1 if v[i - 1] == w[j - 1] else -m):
                 backtrack[i - 1][j - 1] = '↘'
-    return backtrack, s[v_len][w_len]
+
+    v_max_ind = w_max_ind = 1
+    for i in range(1, v_len + 1):
+        for j in range(1, w_len + 1):
+            if s[v_max_ind][w_max_ind] < s[i][j]:
+                v_max_ind, w_max_ind = i, j
+
+    return backtrack, s, (v_max_ind, w_max_ind)
 
 
-def output_lcs(backtrack, v, w, i, j, align):
-    while i >= 0 and j >= 0:
+def output_lcs(backtrack, s, v, w, i, j, align):
+    while i >= 0 and j >= 0 and s[i + 1][j + 1] != 0:
         if backtrack[i][j] == '↘':
             align[v].append(v[i])
             align[w].append(w[j])
@@ -45,14 +52,6 @@ def output_lcs(backtrack, v, w, i, j, align):
             align[w].append(w[j])
             j -= 1
 
-    while j < 0 <= i:
-        align[v].append(v[i])
-        align[w].append('-')
-        i -= 1
-    while i < 0 <= j:
-        align[v].append('-')
-        align[w].append(w[j])
-        j -= 1
     align[v].reverse()
     align[w].reverse()
     align[v] = "".join(align[v])
@@ -66,10 +65,11 @@ def alignment_str(align, v, w, score):
 
 
 def alignment(v, w):
-    backtrack, score = lcs_backtrack(v, w)
+    backtrack, s, (v_max_ind, w_max_ind) = lcs_backtrack(v, w)
+    score = s[v_max_ind][w_max_ind]
+
     align = {v: [], w: []}
-    v_last, w_last = len(v) - 1, len(w) - 1
-    output_lcs(backtrack, v, w, v_last, w_last, align)
+    output_lcs(backtrack, s, v, w, v_max_ind - 1, w_max_ind - 1, align)
     return align, score
 
 
